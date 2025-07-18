@@ -194,11 +194,12 @@ Route::get('appointment-paystack-payment', [AppointmentTransactionController::cl
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [HomeController::class, 'index'])->middleware('verified');
+// Route::get('/home', [HomeController::class, 'index'])->middleware('verified');
+Route::get('/home', [HomeController::class, 'index']);
 
 Route::get('theme-mode', [UserController::class, 'changeThemeMode'])->name('user.mode');
 
-Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function () {
+Route::middleware('auth', 'xss', 'checkUserStatus')->group(function () {
     Route::get('profile', [UserController::class, 'editProfile']);
     Route::post('change-password', [UserController::class, 'changePassword']);
     Route::post('profile-update', [UserController::class, 'profileUpdate']);

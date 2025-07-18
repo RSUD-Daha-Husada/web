@@ -48,9 +48,9 @@ class PatientRepository extends BaseRepository
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
             $user = User::create($input);
 
-            // if ($mail) {
-            //     $user->sendEmailVerificationNotification();
-            // }
+            if ($mail) {
+                $user->sendEmailVerificationNotification();
+            }
 
             if (isset($input['image']) && ! empty($input['image'])) {
                 $mediaId = storeProfileImage($user, $input['image']);

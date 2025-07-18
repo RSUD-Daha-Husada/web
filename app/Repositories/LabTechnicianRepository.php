@@ -46,9 +46,9 @@ class LabTechnicianRepository extends BaseRepository
             $input['phone'] = preparePhoneNumber($input, 'phone');
             $user = User::create($input);
 
-            // if ($mail) {
-            //     $user->sendEmailVerificationNotification();
-            // }
+            if ($mail) {
+                $user->sendEmailVerificationNotification();
+            }
 
             if (isset($input['image']) && ! empty($input['image'])) {
                 $mediaId = storeProfileImage($user, $input['image']);

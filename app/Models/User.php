@@ -379,7 +379,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new CustomVerifyEmail);
+        // $this->notify(new CustomVerifyEmail);
     }
 
     public function gCredentials(): HasOne
