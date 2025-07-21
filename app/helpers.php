@@ -171,10 +171,10 @@ function getLogoUrl()
     static $appLogo;
 
     if (empty($appLogo)) {
-        $appLogo = Setting::where('key', '=', 'app_logo')->first();
+        $appLogo = \App\Models\Setting::where('key', '=', 'app_logo')->first();
     }
 
-    return $appLogo->logo_url;
+    return $appLogo?->logo_url ?? asset('front/images/default-logo.png');
 }
 
 /**

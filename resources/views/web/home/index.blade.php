@@ -14,7 +14,7 @@
                         <div class="hero-content mt-5 mt-lg-0">
                             <h6 class="text-primary mb-3">{{ $frontSetting['home_page_experience'] }} {{ __('messages.web_home.years_experience') }}</h6>
                             <h1 class="mb-3 pb-1">
-                                {{ \Illuminate\Support\Str::limit($frontSetting['home_page_title'], 42) }}
+                            Rumah Sakit Daha Husada
                             </h1>
                             <p class="mb-lg-4 pb-lg-3 mb-4">
                                 {{ \Illuminate\Support\Str::limit($frontSetting['home_page_description'], 170) }}</p>

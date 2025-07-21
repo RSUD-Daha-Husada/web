@@ -16,7 +16,9 @@
     @php
         $settingValue = getSettingValue();
     @endphp
+    @if(isset($settingValue['favicon']['value']))
     <link rel="icon" href="{{ $settingValue['favicon']['value'] }}" type="image/png">
+@endif
     {{--    <link rel="stylesheet" href="{{ asset('web_front/css/slick.css') }}"> --}}
     {{--    <link rel="stylesheet" href="{{ asset('web_front/css/slick-theme.css') }}"> --}}
     {{--    <link rel="stylesheet" href="{{ mix('web_front/css/bootstrap.css') }}"> --}}
