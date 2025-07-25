@@ -147,7 +147,7 @@ Route::middleware('setLanguage')->group(function () {
     Route::get('/working-hours', [Web\WebController::class, 'workingHours'])->name('working-hours');
     Route::get('/testimonial', [Web\WebController::class, 'testimonials'])->name('testimonials');
     // Routes for Qr code
-    Route::get('qr-code/p/{uniqueId}',[Web\WebController::class, 'showQrCodePatient'])->name('qrcode.patient.show');
+    Route::get('qr-code/p/{uniqueId}', [Web\WebController::class, 'showQrCodePatient'])->name('qrcode.patient.show');
     Route::get('/doctor-details/{id}', [Web\WebController::class, 'doctorDetails'])->name('doctor-details');
 });
 
@@ -168,12 +168,12 @@ Route::post('appointment-store', [Web\AppointmentController::class, 'store'])->n
 Route::get('web-doctors-appointment-charge', [Web\AppointmentController::class, 'getDoctorsCharge']);
 //Appointment Payment route
 //Stripe Payment
-Route::get('web-appointment-stripe-success',[AppointmentTransactionController::class, 'webAppointmentStripePaymentSuccess'])->name('web.appointment.stripe.success');
-Route::get('web-appointment-stripe-fail',[AppointmentTransactionController::class, 'webAppointmentStripeFailed'])->name('web.appointment.stripe.failed');
+Route::get('web-appointment-stripe-success', [AppointmentTransactionController::class, 'webAppointmentStripePaymentSuccess'])->name('web.appointment.stripe.success');
+Route::get('web-appointment-stripe-fail', [AppointmentTransactionController::class, 'webAppointmentStripeFailed'])->name('web.appointment.stripe.failed');
 //Razorpay payment Route
 Route::post('web-appointment-razorpay-onboard', [AppointmentTransactionController::class, 'webAppointmentRazorpayPayment'])->name('web.appointment.razorpay.init');
 Route::post('web-razorpay-payment-success', [AppointmentTransactionController::class, 'WebAppointmentRazorpayPaymentSuccess'])->name('web.appointment.razorpay.success');
-Route::post('web-appointment-razorpay-failed',[AppointmentTransactionController::class, 'WebAppointmentRazorPayPaymentFailed'])->name('web.appointment.razorpay.failed');
+Route::post('web-appointment-razorpay-failed', [AppointmentTransactionController::class, 'WebAppointmentRazorPayPaymentFailed'])->name('web.appointment.razorpay.failed');
 
 //Paypay Payment
 Route::get('web-appointment-paypal-onboard', [AppointmentTransactionController::class, 'webAppointmentPaypalOnBoard'])->name('web.appointment.paypal.init');
@@ -181,7 +181,7 @@ Route::get('web-appointment-paypal-payment-success', [AppointmentTransactionCont
 Route::get('web-appointment-paypal-payment-failed', [AppointmentTransactionController::class, 'webAppointmentPaypalFailed'])->name('web.appointment.paypal.failed');
 
 // common route for paystack payment methods
-Route::get('paystack-payment-success',[PurchaseMedicineController::class, 'PaystackPaymentSuccess']);
+Route::get('paystack-payment-success', [PurchaseMedicineController::class, 'PaystackPaymentSuccess']);
 
 // Appointment FlutterWave Payment
 Route::get('appointment-flutterwave-payment-success', [AppointmentTransactionController::class, 'flutterWaveSuccess'])->name('appointment.flutterwave.success');
@@ -219,7 +219,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         });
     });
 
-    Route::middleware('role:Admin')->group(function(){
+    Route::middleware('role:Admin')->group(function () {
         Route::resource('payment-gateways', PaymentGatewayController::class);
         Route::resource('add-custom-fields', AddCustomFieldsController::class);
     });
@@ -405,12 +405,12 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::post('appointments/{appointment}/cancel', [AppointmentController::class, 'cancelAppointment'])->name('appointment.cancel');
         //Appointment Payment Route
         //Stripe Payment
-        Route::get('appointment-stripe-success',[AppointmentTransactionController::class, 'appointmentStripePaymentSuccess'])->name('appointment.stripe.success');
-        Route::get('appointment-stripe-fail',[AppointmentTransactionController::class, 'appointmentStripeFailed'])->name('appointment.stripe.failure');
+        Route::get('appointment-stripe-success', [AppointmentTransactionController::class, 'appointmentStripePaymentSuccess'])->name('appointment.stripe.success');
+        Route::get('appointment-stripe-fail', [AppointmentTransactionController::class, 'appointmentStripeFailed'])->name('appointment.stripe.failure');
         //Razorpay Payment
         Route::post('appointment-razorpay-onboard', [AppointmentTransactionController::class, 'appointmentRazorpayPayment'])->name('appointmentRazorpay.init');
         Route::post('appointment-razorpay-payment-success', [AppointmentTransactionController::class, 'appointmentRazorpayPaymentSuccess'])->name('appointment.razorpay.success');
-        Route::post('appointment-razorpay-failed',[AppointmentTransactionController::class, 'appointmentRazorPayPaymentFailed'])->name('appointment.razorpay.failed');
+        Route::post('appointment-razorpay-failed', [AppointmentTransactionController::class, 'appointmentRazorPayPaymentFailed'])->name('appointment.razorpay.failed');
         //Paypay Payment
         Route::get('appointment-paypal-onboard', [AppointmentTransactionController::class, 'paypalOnBoard'])->name('appointment.paypal.init');
         Route::get('appointment-paypal-payment-success', [AppointmentTransactionController::class, 'paypalSuccess'])->name('appointment.paypal.success');
@@ -426,7 +426,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::get('appointment-paystack-payment', [AppointmentTransactionController::class, 'paystackPayment'])->name('appointment.paystack.init');
 
         // common route for paystack payment methods
-        Route::get('paystack-payment-success',[PurchaseMedicineController::class, 'PaystackPaymentSuccess']);
+        Route::get('paystack-payment-success', [PurchaseMedicineController::class, 'PaystackPaymentSuccess']);
 
         //Appointmenr Transaction Route
         Route::get('appointments-transaction', [AppointmentTransactionController::class, 'index'])->name('appointments-transaction.index');
@@ -530,26 +530,42 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::delete('pathology-categories/{pathologyCategory}', [PathologyCategoryController::class, 'destroy'])->name('pathology.category.destroy');
 
         // Pathology Units routes
-        Route::get('pathology-units',
-            [PathologyUnitController::class, 'index'])->name('pathology.unit.index');
+        Route::get(
+            'pathology-units',
+            [PathologyUnitController::class, 'index']
+        )->name('pathology.unit.index');
         Route::post('pathology-units', [PathologyUnitController::class, 'store'])->name('pathology.unit.store');
-        Route::get('pathology-units/{pathologyUnit}/edit',
-            [PathologyUnitController::class, 'edit'])->name('pathology.unit.edit');
-        Route::patch('pathology-units/{pathologyUnit}',
-            [PathologyUnitController::class, 'update'])->name('pathology.unit.update');
-        Route::delete('pathology-units/{pathologyUnit}',
-            [PathologyUnitController::class, 'destroy'])->name('pathology.unit.destroy');
+        Route::get(
+            'pathology-units/{pathologyUnit}/edit',
+            [PathologyUnitController::class, 'edit']
+        )->name('pathology.unit.edit');
+        Route::patch(
+            'pathology-units/{pathologyUnit}',
+            [PathologyUnitController::class, 'update']
+        )->name('pathology.unit.update');
+        Route::delete(
+            'pathology-units/{pathologyUnit}',
+            [PathologyUnitController::class, 'destroy']
+        )->name('pathology.unit.destroy');
 
         // Pathology Parameters routes
-        Route::get('pathology-parameters',
-        [PathologyParameterController::class, 'index'])->name('pathology.parameter.index');
+        Route::get(
+            'pathology-parameters',
+            [PathologyParameterController::class, 'index']
+        )->name('pathology.parameter.index');
         Route::post('pathology-parameters', [PathologyParameterController::class, 'store'])->name('pathology.parameter.store');
-        Route::get('pathology-parameters/{pathologyParameter}/edit',
-            [PathologyParameterController::class, 'edit'])->name('pathology.parameter.edit');
-        Route::patch('pathology-parameters/{pathologyParameter}',
-            [PathologyParameterController::class, 'update'])->name('pathology.parameter.update');
-        Route::delete('pathology-parameters/{pathologyParameter}',
-            [PathologyParameterController::class, 'destroy'])->name('pathology.parameter.destroy');
+        Route::get(
+            'pathology-parameters/{pathologyParameter}/edit',
+            [PathologyParameterController::class, 'edit']
+        )->name('pathology.parameter.edit');
+        Route::patch(
+            'pathology-parameters/{pathologyParameter}',
+            [PathologyParameterController::class, 'update']
+        )->name('pathology.parameter.update');
+        Route::delete(
+            'pathology-parameters/{pathologyParameter}',
+            [PathologyParameterController::class, 'destroy']
+        )->name('pathology.parameter.destroy');
 
         Route::get('doctor-opd-charges', [DoctorOPDChargeController::class, 'index'])
             ->name('doctor-opd-charges.index')
@@ -596,7 +612,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
 
     // Common route for paystack payment success
     Route::middleware('role:Admin|Lab Technician|Pharmacist|Patient|Doctor|Receptionist|Nurse')->group(function () {
-        Route::get('paystack-payment-success',[PurchaseMedicineController::class, 'PaystackPaymentSuccess']);
+        Route::get('paystack-payment-success', [PurchaseMedicineController::class, 'PaystackPaymentSuccess']);
     });
 
     Route::middleware('role:Admin|Lab Technician|Pharmacist|Nurse')->group(function () {
@@ -608,13 +624,13 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::resource('medicine-purchase', PurchaseMedicineController::class)->parameters(['categories' => 'category']);
 
         // Medicine purchase stripe payment
-        Route::get('medicine-purchase-stripe-success',[PurchaseMedicineController::class, 'stripeSuccess'])->name('medicine.purchase.stripe.success');
-        Route::get('medicine-purchase-stripe-fail',[PurchaseMedicineController::class, 'stripeFail'])->name('medicine.purchase.stripe.failed');
+        Route::get('medicine-purchase-stripe-success', [PurchaseMedicineController::class, 'stripeSuccess'])->name('medicine.purchase.stripe.success');
+        Route::get('medicine-purchase-stripe-fail', [PurchaseMedicineController::class, 'stripeFail'])->name('medicine.purchase.stripe.failed');
 
         // purchase medicine razorpay payment
-        Route::post('medicine-purchase-razorpay-init',[PurchaseMedicineController::class,'razorPayInit'])->name('purchase.medicine.razorpay.init');
-        Route::post('medicine-purchase-razorpay-success',[PurchaseMedicineController::class,'razorPaySuccess'])->name('purchase.medicine.razorpay.success');
-        Route::post('medicine-purchase-razorpay-fail',[PurchaseMedicineController::class,'razorPayFailed'])->name('purchase.medicine.razorpay.fail');
+        Route::post('medicine-purchase-razorpay-init', [PurchaseMedicineController::class, 'razorPayInit'])->name('purchase.medicine.razorpay.init');
+        Route::post('medicine-purchase-razorpay-success', [PurchaseMedicineController::class, 'razorPaySuccess'])->name('purchase.medicine.razorpay.success');
+        Route::post('medicine-purchase-razorpay-fail', [PurchaseMedicineController::class, 'razorPayFailed'])->name('purchase.medicine.razorpay.fail');
 
         // Purchase medicine Paystack Payment
         Route::get('purchase-medicine-paystack-onboard', [PurchaseMedicineController::class, 'paystackPayment'])->name('purchase.medicine.paystack.init');
@@ -624,7 +640,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::post('purchase-medicine-phonepe-payment-success', [PurchaseMedicineController::class, 'phonePePaymentSuccess'])->name('purchase.medicine.phonepe.callback');
 
         //purchase medicine FlutterWave Payment Route
-        Route::get('purchase-medicine-flutterwave-payemnt-success',[PurchaseMedicineController::class,'flutterwavePaymentSuccess'])->name('purchase.medicine.flutterwave.success');
+        Route::get('purchase-medicine-flutterwave-payemnt-success', [PurchaseMedicineController::class, 'flutterwavePaymentSuccess'])->name('purchase.medicine.flutterwave.success');
 
         Route::get('export-medicine-purchase', [PurchaseMedicineController::class, 'purchaseMedicineExport'])->name('purchase-medicine.excel');
         Route::get('get-medicine/{medicine}', [PurchaseMedicineController::class, 'getMedicine'])->name('get-medicine');
@@ -632,13 +648,13 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::resource('medicine-bills', MedicineBillController::class);
 
         // medicine bill stripe payment
-        Route::get('stripe-success',[MedicineBillController::class, 'stripeSuccess'])->name('medicine.bill.stripe.success');
-        Route::get('stripe-fail',[MedicineBillController::class, 'stripeFailed'])->name('medicine.bill.stripe.failed');
+        Route::get('stripe-success', [MedicineBillController::class, 'stripeSuccess'])->name('medicine.bill.stripe.success');
+        Route::get('stripe-fail', [MedicineBillController::class, 'stripeFailed'])->name('medicine.bill.stripe.failed');
 
         // medicine bill razorpay payment
-        Route::post('razorpay-payment',[MedicineBillController::class, 'razorPayPayment'])->name('medicine.bill.razorpay.init');
-        Route::post('medicine-bill-razorpay-success',[MedicineBillController::class, 'razorPayPaymentSuccess'])->name('medicine.bill.razorpay.success');
-        Route::post('medicine-bill-razorpay-failed',[MedicineBillController::class, 'razorPayPaymentFailed'])->name('medicine.bill.razorpay.failed');
+        Route::post('razorpay-payment', [MedicineBillController::class, 'razorPayPayment'])->name('medicine.bill.razorpay.init');
+        Route::post('medicine-bill-razorpay-success', [MedicineBillController::class, 'razorPayPaymentSuccess'])->name('medicine.bill.razorpay.success');
+        Route::post('medicine-bill-razorpay-failed', [MedicineBillController::class, 'razorPayPaymentFailed'])->name('medicine.bill.razorpay.failed');
 
         // medicine bill phonepe payment
         Route::post('medicine-bill-phonepe-payment-success', [MedicineBillController::class, 'phonePePaymentSuccess'])->name('medicine.bill.phonepe.callback');
@@ -648,7 +664,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         // Route::get('medicine-bill-paystack-payment-success',[MedicineBillController::class, 'paystackPaymentSuccess'])->name('medicine.bill.paystack.success');
 
         // medicine bill medicine flutterwave Payment
-        Route::get('medicine-bill-flutterwave-payemnt-success',[MedicineBillController::class,'flutterwavePaymentSuccess'])->name('medicine.bill.flutterwave.success');
+        Route::get('medicine-bill-flutterwave-payemnt-success', [MedicineBillController::class, 'flutterwavePaymentSuccess'])->name('medicine.bill.flutterwave.success');
 
         Route::post('medicine-bills/store-patient', [MedicineBillController::class, 'storePatient'])->name('store.patient');
         Route::get('medicine-bills-pdf/{id}', [MedicineBillController::class, 'convertToPDF'])->name('medicine.bill.pdf');
@@ -817,12 +833,12 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
 
     Route::middleware('role:Admin|Patient')->group(function () {
         Route::resource('manual-billing-payments', ManualBillPaymentController::class);
-        Route::get('stripe-payment-success',[ManualBillPaymentController::class, 'paymentSuccess'])->name('stripe.payment.success');
+        Route::get('stripe-payment-success', [ManualBillPaymentController::class, 'paymentSuccess'])->name('stripe.payment.success');
         Route::post('razorpay-onboard', [ManualBillPaymentController::class, 'onBoard'])->name('razorpay.init');
-        Route::post('razorpay-payment-success',[ManualBillPaymentController::class, 'razorpayPaymentSuccess'])->name('razorpay.success');
+        Route::post('razorpay-payment-success', [ManualBillPaymentController::class, 'razorpayPaymentSuccess'])->name('razorpay.success');
 
         //FlutterWave Payment route
-        Route::get('flutterwave-payemnt-success',[ManualBillPaymentController::class,'flutterwavePaymentSuccess'])->name('flutterwave.success');
+        Route::get('flutterwave-payemnt-success', [ManualBillPaymentController::class, 'flutterwavePaymentSuccess'])->name('flutterwave.success');
         //PhonePe & paystack callBack Route
         Route::post('bill-phonepe-payment-success', [ManualBillPaymentController::class, 'billPhonePePaymentSuccess'])->name('billing.phonepe.callback');
         Route::get('manual-paystack-onboard', [ManualBillPaymentController::class, 'ManualPaystackOnBoard'])->name('manual.paystack.init');
@@ -887,7 +903,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::get('incomes/{income}/edit', [IncomeController::class, 'edit'])->name('incomes.edit');
     });
 
-    Route::middleware('role:Admin|Accountant|Receptionist')->group(function(){
+    Route::middleware('role:Admin|Accountant|Receptionist')->group(function () {
         //Bill Route
         Route::resource('bills', BillController::class);
         Route::get('bills', [BillController::class, 'index'])
@@ -1058,9 +1074,9 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::get('employees-list', [EmployeePayrollController::class, 'getEmployeesList'])->name('employees.list');
     });
 
-    Route::middleware('role:Patient')->group(function (){
+    Route::middleware('role:Patient')->group(function () {
         //Patient Dashboard
-        Route::get('patient-dashboard',[HomeController::class,'patientDashboard'])->name('patient.dashboard');
+        Route::get('patient-dashboard', [HomeController::class, 'patientDashboard'])->name('patient.dashboard');
     });
 
     Route::middleware('role:Admin')->group(function () {
@@ -1200,13 +1216,13 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
     Route::middleware('role:Patient|Admin|Receptionist')->group(function () {
 
         Route::resource('smart-patient-cards', PatientIdCardTemplateController::class);
-        Route::post('smart-patient-cards/status/{id}', [PatientIdCardTemplateController::class,'activeDeactiveStatus'])->name('patient.id.card.status');
+        Route::post('smart-patient-cards/status/{id}', [PatientIdCardTemplateController::class, 'activeDeactiveStatus'])->name('patient.id.card.status');
 
-        Route::resource('generate-patient-smart-cards',GeneratePatientIdCardController::class);
-        Route::get('patient-smart-card',[GeneratePatientIdCardController::class,'index'])->name('patient.smart.card.index');
-        Route::get('smart-patient-cards/{id}/pdf',[GeneratePatientIdCardController::class,'downloadIdCard'])->name('patient.id.card.pdf');
-        Route::get('generate-qrcode/{uniqueId}',[GeneratePatientIdCardController::class,'generateQrCode'])->name('generate.qrcode');
-        Route::get('generate-qrcode/{uniqueId}',[GeneratePatientIdCardController::class,'generateQrCode'])->name('generate.qrcode');
+        Route::resource('generate-patient-smart-cards', GeneratePatientIdCardController::class);
+        Route::get('patient-smart-card', [GeneratePatientIdCardController::class, 'index'])->name('patient.smart.card.index');
+        Route::get('smart-patient-cards/{id}/pdf', [GeneratePatientIdCardController::class, 'downloadIdCard'])->name('patient.id.card.pdf');
+        Route::get('generate-qrcode/{uniqueId}', [GeneratePatientIdCardController::class, 'generateQrCode'])->name('generate.qrcode');
+        Route::get('generate-qrcode/{uniqueId}', [GeneratePatientIdCardController::class, 'generateQrCode'])->name('generate.qrcode');
     });
 
     Route::middleware('role:Admin|Patient|Lab Technician')->group(function () {
@@ -1258,13 +1274,13 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::get('investigation-download/{investigationReport}', [InvestigationReportController::class, 'downloadMedia']);
     });
 
-    Route::middleware('role:Admin|Doctor|Receptionist')->group(function(){
+    Route::middleware('role:Admin|Doctor|Receptionist')->group(function () {
         Route::get('ipds/create', [IpdPatientDepartmentController::class, 'create'])->name('ipd.patient.create');
         Route::post('ipds', [IpdPatientDepartmentController::class, 'store'])->name('ipd.patient.store');
         Route::get('ipds/{ipdPatientDepartment}/edit', [IpdPatientDepartmentController::class, 'edit'])->name('ipd.patient.edit');
         Route::patch('ipds/{ipdPatientDepartment}', [IpdPatientDepartmentController::class, 'update'])->name('ipd.patient.update');
 
-         // IPD Prescription routes
+        // IPD Prescription routes
         Route::post('ipd-prescription', [IpdPrescriptionController::class, 'store'])->name('ipd.prescription.store');
         Route::get('ipd-prescription/{ipdPrescription}/edit', [IpdPrescriptionController::class, 'edit'])->name('ipd.prescription.edit');
         Route::post('ipd-prescription/{ipdPrescription}', [IpdPrescriptionController::class, 'update'])->name('ipd.prescription.update');
@@ -1277,7 +1293,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
 
         //Ipd payment routes
         Route::post('ipd-payments', [IpdPaymentController::class, 'store'])->name('ipd.payments.store');
-        Route::get('ipd-stripe-success',[IpdPaymentController::class, 'ipdStripePaymentSuccess'])->name('ipd.stripe.success');
+        Route::get('ipd-stripe-success', [IpdPaymentController::class, 'ipdStripePaymentSuccess'])->name('ipd.stripe.success');
         Route::post('ipd-razorpay-onboard', [IpdPaymentController::class, 'ipdRazorpayPayment'])->name('ipdRazorpay.init');
         Route::post('ipd-razorpay-payment-success', [IpdPaymentController::class, 'ipdRazorpayPaymentSuccess'])->name('ipdRazorpay.success');
         Route::post('phonepe-payment-success', [IpdPaymentController::class, 'phonePePaymentSuccess'])->name('ipd.phonepe.callback');
@@ -1286,7 +1302,7 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::delete('ipd-payments/{ipdPayment}', [IpdPaymentController::class, 'destroy'])->name('ipd.payments.destroy');
 
         //FlutterWave Payment Route
-        Route::get('ipd-flutterwave-payemnt-success',[IpdPaymentController::class,'ipdFlutterwavePaymentSuccess'])->name('ipdFlutterwave.success');
+        Route::get('ipd-flutterwave-payemnt-success', [IpdPaymentController::class, 'ipdFlutterwavePaymentSuccess'])->name('ipdFlutterwave.success');
         //Paystack Route
         Route::get('ipd-paystack-onboard', [IpdPaymentController::class, 'ipdPaystackPayment'])->name('ipd.paystack.init');
         // Route::get('ipd-paystack-payment-success',[IpdPaymentController::class, 'IpdPaystackPaystackSuccess'])->name('patient.paystack.success');
@@ -1465,12 +1481,12 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
     });
 
     Route::middleware('role:Doctor')->group(function () {
-        Route::get('google-meet', [GoogleMeetLiveConsultationController::class,'index'])->name('googlemeet.consultations.index');
+        Route::get('google-meet', [GoogleMeetLiveConsultationController::class, 'index'])->name('googlemeet.consultations.index');
         Route::get('google-meet-auth', [GoogleMeetLiveConsultationController::class, 'oauth'])->name('googleAuth');
         Route::get('google/redirect', [GoogleMeetLiveConsultationController::class, 'redirect']);
         Route::post('event-google-calendar', [GoogleMeetLiveConsultationController::class, 'eventGoogleCalendarStore',])->name('event.google.calendar.store');
-        Route::get('sync-google-calendar-list',[GoogleMeetLiveConsultationController::class, 'syncGoogleCalendarList'])->name('syncGoogleCalendarList');
-        Route::get('disconnect-google-calendar',[GoogleMeetLiveConsultationController::class, 'disconnectGoogleCalendar'])->name('disconnectCalendar.destroy');
+        Route::get('sync-google-calendar-list', [GoogleMeetLiveConsultationController::class, 'syncGoogleCalendarList'])->name('syncGoogleCalendarList');
+        Route::get('disconnect-google-calendar', [GoogleMeetLiveConsultationController::class, 'disconnectGoogleCalendar'])->name('disconnectCalendar.destroy');
         Route::post('google-calendar-json-file-store', [GoogleMeetLiveConsultationController::class, 'googleCalendarJsonFileStore'])->name('google.json.file.store');
     });
 
@@ -1518,7 +1534,7 @@ Route::get('qr-scan', function () {
 
 Route::get('/set-language', [Web\WebController::class, 'setLanguage'])->name('set-language');
 
-require __DIR__.'/upgrade.php';
+require __DIR__ . '/upgrade.php';
 
 Route::get('zoom/connect', [LiveConsultationController::class, 'zoomConnect'])->name('zoom.connect');
 Route::any('zoom/callback', [LiveConsultationController::class, 'zoomCallback']);
