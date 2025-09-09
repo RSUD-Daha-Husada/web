@@ -134,6 +134,7 @@ Route::get('/users/creates', function () {
 // Routes for Landing Page starts
 Route::middleware('setLanguage')->group(function () {
     Route::get('/', [Web\WebController::class, 'index'])->name('front');
+    Route::get('/v2', [Web\WebController::class, 'index2'])->name('front2');
     // Routes for Enquiry Form
     Route::post('send-enquiry', [EnquiryController::class, 'store'])->name('send.enquiry');
     Route::get('/contact-us', [EnquiryController::class, 'contactUs'])->name('contact');

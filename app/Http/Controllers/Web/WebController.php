@@ -75,6 +75,27 @@ class WebController extends AppBaseController
             compact('doctorsDepartments', 'doctors', 'todayNotice', 'testimonials', 'totalbeds',
                 'totalDoctorNurses', 'totalPatient', 'doctorAppointments', 'frontSetting', 'frontServices'));
     }
+    public function index2()
+    {
+        $totalbeds = Bed::count();
+        $totalDoctorNurses = Doctor::count() + Nurse::count();
+        $totalPatient = Patient::count();
+        $doctorsDepartments = DoctorDepartment::take(6)->toBase()->get();
+        $doctorAppointments = Doctor::withCount('appointments')->with('department', 'doctorUser')
+            ->whereHas('doctorUser', function (Builder $query) {
+                return $query->where('status', 1);
+            })
+            ->distinct()->take(6)->orderByDesc('appointments_count')->get();
+        $todayNotice = NoticeBoard::whereDate('created_at', Carbon::today()->toDateTimeString())->latest()->first();
+        $testimonials = Testimonial::with('media')->get();
+        $doctors = Doctor::with('doctorUser')->get();
+        $frontSetting = FrontSetting::whereType(FrontSetting::HOME_PAGE)->pluck('value', 'key')->toArray();
+        $frontServices = FrontService::all()->take(8);
+
+        return view('web2.home.index',
+            compact('doctorsDepartments', 'doctors', 'todayNotice', 'testimonials', 'totalbeds',
+                'totalDoctorNurses', 'totalPatient', 'doctorAppointments', 'frontSetting', 'frontServices'));
+    }
 
     public function demo()
     {
