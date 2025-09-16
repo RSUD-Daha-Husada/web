@@ -15,10 +15,11 @@
                             <div class="col-12 features-list col-md-8 offset-md-2 col-lg-4 offset-lg-0">
                                 <div class="feature-item px-2 py-3 mb-3 wow fadeInUp">
                                     <div class="row no-gutters">
-                                        <div
-                                            class="feature-item-image col-2 text-center d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('web/img/super-admin.png') }}">
-                                        </div>
+                                    <div class="col-lg-2 col-6">
+    <a href="{{ url('/') }}" class="navbar-brand">
+        <img src="{{ asset('web/img/logo.png') }}" alt="Logo Rumah Sakit" width="100" class="img-fluid" />
+    </a>
+</div>
                                         <div class="feature-item-content col-10 d-flex flex-column justify-content-center">
                                             <h6 class="m-0">super admin</h6>
                                             <p class="text-muted m-0">Take full control with all feaetures.</p>

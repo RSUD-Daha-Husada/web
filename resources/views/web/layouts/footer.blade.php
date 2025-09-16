@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-lg-10">
                         <p class="d-block text-white">
-                            {!! $settingValue['about_us']['value'] !!}
+                        {!! $settingValue['about_us']['value'] ?? '' !!}
                         </p>
                     </div>
                 </div>
@@ -49,29 +49,38 @@
                 </ul>
             </div>
             <div class="col-lg-3 col-md-6 col-12">
-                <h3 class="mb-4 pb-1 text-primary">{{ __('messages.web_menu.contact_information') }}</h3>
-                <div class="footer-info">
+    <h3 class="mb-4 pb-1 text-primary">{{ __('messages.web_menu.contact_information') }}</h3>
+    <div class="footer-info">
 
-                    <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
-                        <i class="fa-solid fa-phone text-white fs-5 me-3"></i>
-                        <a href="tel:{{ $settingValue['hospital_phone']['value'] }}" class="text-decoration-none text-white fs-6">
-                            {{ $settingValue['hospital_phone']['value'] }}
-                        </a>
-                    </div>
-                    <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
-                        <i class="fa-solid fa-clock fs-5 me-3 text-white"></i>
-                        <p class="text-white fs-6 mb-0">
-                            {{ $settingValue['hospital_from_time']['value'] }}
-                        </p>
-                    </div>
-                    <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
-                        <i class="fa-solid fa-location-dot fs-5 me-3 text-white"></i>
-                        <p class="text-white fs-6 mb-0">
-                            {{ $settingValue['hospital_address']['value'] }}
-                        </p>
-                    </div>
-                </div>
-            </div>
+        @if(isset($settingValue['hospital_phone']))
+        <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
+            <i class="fa-solid fa-phone text-white fs-5 me-3"></i>
+            <a href="tel:{{ $settingValue['hospital_phone']['value'] }}" class="text-decoration-none text-white fs-6">
+                {{ $settingValue['hospital_phone']['value'] }}
+            </a>
+        </div>
+        @endif
+
+        @if(isset($settingValue['hospital_from_time']))
+        <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
+            <i class="fa-solid fa-clock fs-5 me-3 text-white"></i>
+            <p class="text-white fs-6 mb-0">
+                {{ $settingValue['hospital_from_time']['value'] }}
+            </p>
+        </div>
+        @endif
+
+        @if(isset($settingValue['hospital_address']))
+        <div class="d-flex align-items-center footer-info__block mb-3 pb-1">
+            <i class="fa-solid fa-location-dot fs-5 me-3 text-white"></i>
+            <p class="text-white fs-6 mb-0">
+                {{ $settingValue['hospital_address']['value'] }}
+            </p>
+        </div>
+        @endif
+
+    </div>
+</div>
             <div class="col-12 text-center mt-lg-5 mt-4 copy-right">
                 <p class="pt-4 pb-4 mb-0 text-white">
                     {{ __('messages.web_menu.copyright') }} © {{ date('Y') }} {{ __('messages.web_menu.all_rights_reserved_by') }}
